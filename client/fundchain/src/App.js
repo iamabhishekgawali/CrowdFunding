@@ -1,16 +1,20 @@
 
 import './App.css';
 import NavBar from "./Components/NavBar"
-import {useContext} from "react"
-import {WalletContext} from "./Context/WalletContext"
-
+import {BrowserRouter as Router, Route, Routes} from "react-router-dom"
+import CreateCampaign from './Components/CreateCampaign';
+import Home from './Components/Home';
 function App() {
 
-  const {connectedAccount} = useContext(WalletContext);
   return (
     <>
-      <p>{connectedAccount}</p>
-      <NavBar></NavBar>
+    <Router>
+    <NavBar/>
+      <Routes>
+        <Route path='/' element={<Home/>} />
+        <Route path='/newCampaign' element={<CreateCampaign/>} />
+      </Routes>
+    </Router>
     </>
   )
 }
