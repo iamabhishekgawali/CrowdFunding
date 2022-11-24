@@ -1,0 +1,43 @@
+
+@font-face {
+    font-family: Roboto;
+    src: url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+}
+
+.CreateCampaignOuter{
+    
+    padding: 20px;
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.CreateCampaignForm {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 40px;
+    
+}
+
+.CampaignForm{
+    /* background-color: aqua; */
+    display: flex;
+    flex-direction: column;
+
+}
+
+.field{
+    background-color: red;
+    margin: 10px;
+    width: 100%;
+}
+
+
+h1{
+    font-family: 'Roboto','arial',sans-serif;
+}
+

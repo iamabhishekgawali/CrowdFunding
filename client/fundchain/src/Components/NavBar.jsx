@@ -29,7 +29,7 @@ export default function NavBar() {
 
         <div className="HowitWorks" >
           <button>
-            <Link href="/#howitworks"> How it Works</Link>
+            <Link to="/howitworks"> How it Works</Link>
           </button>
         </div>
 
