@@ -5,6 +5,8 @@
 import React, { useEffect, useState } from "react";
 import { ethers } from "ethers"
 
+import { contractABI,contractAddress } from "../utils/constant";
+
 export const WalletContext = React.createContext();
 
 const { ethereum } = window;
@@ -12,8 +14,14 @@ const { ethereum } = window;
 const getWallet = () => {
     const provider = new ethers.providers.Web3Provider(ethereum);
     const signer = provider.getSigner();
+    const TransactionContract = new ethers.Contract(contractAddress,contractABI,signer); 
     console.log(provider);
     console.log(signer);
+    console.log(TransactionContract)
+}
+
+const CreateNewCampaign = ()=>{
+    getWallet();
 }
 
 
@@ -57,7 +65,7 @@ export const WalletProvider = ({ children }) => {
     }, [])
 
     return (
-        <WalletContext.Provider value={{ ConnectWallet, connectedAccount }}>
+        <WalletContext.Provider value={{ ConnectWallet, connectedAccount,CreateNewCampaign }}>
             {children}
         </WalletContext.Provider>
     )
