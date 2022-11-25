@@ -1,5 +1,5 @@
 
-import abi from "./CampaignFactory.json"
+import abi from "../utils/CampaignFactory.json"
 
 export const contractABI = abi.abi;
-export const  contractAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
+export const  contractAddress = "0x1b69133399f54C0323CfE530cBA338a66aD70380";

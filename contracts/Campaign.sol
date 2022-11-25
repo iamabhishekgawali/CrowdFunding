@@ -11,12 +11,13 @@ contract CampaignFactory {
         string memory image,
         uint target,
         uint _datecreated,
-        string memory _Link
+        string memory _Link,
+        address Sender
     ) public {
         address newCampaign = address(
             new Campaign(
                 minimum,
-                msg.sender,
+                Sender,
                 name,
                 description,
                 image,
@@ -30,6 +31,10 @@ contract CampaignFactory {
 
     function getDeployedCampaigns() public view returns (address[] memory) {
         return deployedCampaigns;
+    }
+
+    function GetNumber() public {
+        
     }
 }
 
