@@ -14,9 +14,6 @@ const getWallet = () => {
     const provider = new ethers.providers.Web3Provider(ethereum);
     const signer = provider.getSigner();
     const TransactionContract = new ethers.Contract(contractAddress,contractABI,signer); 
-    // console.log(provider);
-    // console.log(signer);
-    // console.log(TransactionContract)
     return TransactionContract;
 }
 
@@ -53,28 +50,24 @@ const GetDeployedTransaction = async ()=>{
     }
 }
 
-
-
-
-
-
 export const WalletProvider = ({ children }) => {
 
     const [connectedAccount, setconnectedAccount] = useState("");
     const [isloading,setIsLoading] = useState(false);
     const [CampaignsData,setCampaignData] = useState([]);
+    const [CampaignsSummary,setCampaignsSummary] = useState({});
 
     async function GetAllCampaignsData(){
         const provider = new ethers.providers.Web3Provider(ethereum);
         const signer = provider.getSigner();
+        let RecievedData = []
         CampaignsData.map(async (e)=>{
             const TransactionContract = new ethers.Contract(e,contractABI1,signer);
             const Response  = await TransactionContract.getSummary();
-            Response.map((e)=>{
-                console.log(e.toString())
-            })
-            
+            console.log(typeof Response)
+            RecievedData.push(Response)
         })
+        setCampaignsSummary(RecievedData)
     }
 
     useEffect(()=>{
@@ -116,7 +109,7 @@ export const WalletProvider = ({ children }) => {
     }, [])
 
     return (
-        <WalletContext.Provider value={{ ConnectWallet, connectedAccount, CreateNewCampaign , isloading , setIsLoading , GetDeployedTransaction,CampaignsData,setCampaignData}}>
+        <WalletContext.Provider value={{ CampaignsSummary,ConnectWallet, connectedAccount, CreateNewCampaign , isloading , setIsLoading , GetDeployedTransaction,CampaignsData,setCampaignData}}>
             {children}
         </WalletContext.Provider>
     )

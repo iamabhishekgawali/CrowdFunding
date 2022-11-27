@@ -9,9 +9,10 @@ import { useNavigate } from 'react-router-dom';
 export default function Home(){
 
     const [spinner,setSpinner] = useState(true);
-    const  {connectedAccount,GetDeployedTransaction,CampaignsData,setCampaignData}  = useContext(WalletContext);
+    const  {CampaignsSummary,GetDeployedTransaction,CampaignsData,setCampaignData}  = useContext(WalletContext);
     const navigate = useNavigate();
-
+    console.log("Before")
+    console.log(CampaignsSummary)
     useEffect(()=>{
         GetDeployedTransaction().then((res)=>{
             setCampaignData(res);
