@@ -33,9 +33,6 @@ contract CampaignFactory {
         return deployedCampaigns;
     }
 
-    function GetNumber() public {
-        
-    }
 }
 
 contract Campaign {

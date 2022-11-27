@@ -5,7 +5,7 @@
 import React, { useEffect, useState } from "react";
 import { ethers } from "ethers"
 
-import { contractABI,contractAddress } from "../utils/constant";
+import { contractABI,contractAddress,contractABI1 } from "../utils/constant";
 
 export const WalletContext = React.createContext();
 const { ethereum } = window;
@@ -33,6 +33,8 @@ const CreateNewCampaign = async (WalletAddress,title,MinAmount,Imageurl,TargetAm
     console.log(TransactionHash.hash);
     TransactionHash.wait();
     console.log(`Success - ${TransactionHash.hash}`);
+
+
 }
 
 const GetDeployedTransaction = async ()=>{
@@ -43,20 +45,41 @@ const GetDeployedTransaction = async ()=>{
     const Transaction = getWallet();
     console.log("Getting Deployed Campaign...")
     const TransactionHash = await Transaction.getDeployedCampaigns();
-    console.log(TransactionHash);
+    return TransactionHash;
     }
     catch(err){
         console.log("Whats the problme yrr")
         console.log(err)
     }
-
 }
+
+
+
+
 
 
 export const WalletProvider = ({ children }) => {
 
     const [connectedAccount, setconnectedAccount] = useState("");
     const [isloading,setIsLoading] = useState(false);
+    const [CampaignsData,setCampaignData] = useState([]);
+
+    async function GetAllCampaignsData(){
+        const provider = new ethers.providers.Web3Provider(ethereum);
+        const signer = provider.getSigner();
+        CampaignsData.map(async (e)=>{
+            const TransactionContract = new ethers.Contract(e,contractABI1,signer);
+            const Response  = await TransactionContract.getSummary();
+            Response.map((e)=>{
+                console.log(e.toString())
+            })
+            
+        })
+    }
+
+    useEffect(()=>{
+        GetAllCampaignsData();
+    },[CampaignsData])
 
     const CheckifWalletisConnected = async () => {
 
@@ -93,7 +116,7 @@ export const WalletProvider = ({ children }) => {
     }, [])
 
     return (
-        <WalletContext.Provider value={{ ConnectWallet, connectedAccount, CreateNewCampaign , isloading , setIsLoading , GetDeployedTransaction}}>
+        <WalletContext.Provider value={{ ConnectWallet, connectedAccount, CreateNewCampaign , isloading , setIsLoading , GetDeployedTransaction,CampaignsData,setCampaignData}}>
             {children}
         </WalletContext.Provider>
     )

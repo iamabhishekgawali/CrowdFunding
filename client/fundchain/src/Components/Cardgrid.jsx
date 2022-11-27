@@ -1,15 +1,13 @@
 
-import { WalletContext } from "../Context/WalletContext"
-import {useContext} from "react"
+// Show available Campaigns
+import { WalletContext} from "../Context/WalletContext"
+import {useContext,useEffect,useState} from "react"
 
 export default function Cardgrid (){
-
-    const  {connectedAccount,GetDeployedTransaction}  = useContext(WalletContext)
-
-
+    
     return(
         <div>
-            This is a Card
+
         </div>
     )
 }
