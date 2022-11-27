@@ -1,23 +1,27 @@
 .NavBar {
 
-    background-color: aliceblue;
+    background-color: lightblue;
     display: flex;
     padding: 10px;
     flex-direction: row;
-    width: 200%;
+    width: 150%;
+    margin-bottom: 200px;
+    margin-left: 100px;
 }
 
 .Right {
     flex: 1;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: left;
+    margin-left: 0px;
+    /* align-items: center; */
 }
 
 .Left {
     flex: 1;
     display: flex;
     justify-content: center;
+    margin-right: 50px;
 }
 
 .Title{
@@ -40,6 +44,7 @@ button {
     color: grey;
     text-align: center;
     transition: all 0.2s;
+    border-radius: 10px;
 }
 
 button:hover{
