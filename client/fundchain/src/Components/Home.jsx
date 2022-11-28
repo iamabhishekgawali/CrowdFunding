@@ -10,14 +10,13 @@ export default function Home(){
 
     const [spinner,setSpinner] = useState(true);
     const  {CampaignsSummary,GetDeployedTransaction,CampaignsData,setCampaignData}  = useContext(WalletContext);
-    const navigate = useNavigate();
     console.log("Before")
     console.log(CampaignsSummary)
+
     useEffect(()=>{
         GetDeployedTransaction().then((res)=>{
             setCampaignData(res);
         });
-        console.log(navigate[0])
         setTimeout(() => {
             setSpinner(false)
         }, 5000);
@@ -26,11 +25,7 @@ export default function Home(){
     return (
         <div className = "Home">
               { spinner ? (<CircularBar/>) : (
-                
-                CampaignsData.map((e)=>{
-                        return <div>{e}</div>
-                    })
-                
+                <Cardgrid/>
               )}
         </div>
     )

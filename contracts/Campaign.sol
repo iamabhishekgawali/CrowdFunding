@@ -2,8 +2,9 @@
 pragma solidity ^0.8.17;
 
 contract CampaignFactory {
+    
     address[] public deployedCampaigns;
-
+    // 0 1 2 3
     function createCampaign(
         uint minimum,
         string memory name,
@@ -134,7 +135,8 @@ contract Campaign {
             string memory,
             string memory,
             string memory,
-            uint
+            uint,
+            address
         )
     {
         return (
@@ -146,7 +148,8 @@ contract Campaign {
             CampaignName,
             CampaignDescription,
             imageUrl,
-            targetToAchieve
+            targetToAchieve,
+            address(this)
         );
     }
 }
