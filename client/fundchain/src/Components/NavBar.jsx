@@ -4,6 +4,7 @@ import "../Styles/NavBar.css"
 import { useContext } from "react"
 import { WalletContext } from "../Context/WalletContext"
 import { Link } from "react-router-dom"
+import { Card,Button } from '@mui/material'
 
 
 export default function NavBar() {
@@ -12,44 +13,44 @@ export default function NavBar() {
 
   return (
 
-    <div className="NavBar">
-      <div className="Left">
+    <Card sx={{ boxShadow: 2, }} className="NavBar">
+      <div className="NavLeft">
         <div className="Title" >
           <Link to="/">🤝FundChain</Link>
         </div>
       </div>
 
-      <div className="Right">
+      <div className="NavRight">
 
         <div className="CreateCampaign">
-          <button>
+          <Button variant="contained">
             <Link to="/newCampaign">Create Campaign</Link>
-          </button>
+          </Button>
         </div>
 
         <div className="HowitWorks" >
-          <button>
+          <Button variant="contained">
             <Link to="/howitworks"> How it Works</Link>
-          </button>
+          </Button>
         </div>
 
         <div className="Wallet">
 
           {connectedAccount ? (
             <div>
-              <button>{connectedAccount}</button>
+              <Button variant="contained">{connectedAccount}</Button>
             </div>
           ) : (
             <div>
-              <button onClick={() => {
+              <Button onClick={() => {
                 ConnectWallet();
               }}>
                 Connect to MetaMask
-              </button>
+              </Button>
             </div>
           )}
         </div>
       </div>
-    </div >
+    </Card >
   );
 }

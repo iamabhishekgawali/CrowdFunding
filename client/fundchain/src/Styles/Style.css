@@ -6,7 +6,7 @@
   }
   
   html {
-    background: #faf7f2;
+    /* background: #faf7f2; */
     background-image: url(https://s3.postimg.org/s1n3ji1ur/paper_fibers_2_X.png);
     box-sizing: border-box;
     font-family: "Lato", sans-serif;
@@ -28,14 +28,14 @@
   .main-card--cointainer {
     display: grid;
     grid-template-columns: repeat(3, minmax(300px, 500px));
-    grid-gap: 50px;
+    grid-gap: 5px;
     justify-content: space-around;
-    margin-left: 100px;
-    margin-top: 100px;
+    margin-left: 10px;
+    margin-top: 10px;
   }
   
   .card-container {
-    margin: 25px;
+    margin: 5px;
     position: relative;
     display: grid;
     grid-template-columns: 1fr;

@@ -1,23 +1,27 @@
 .NavBar {
 
-    background-color: lightblue;
+    background-color: rgb(247, 248, 251);
     display: flex;
     padding: 10px;
     flex-direction: row;
-    width: 150%;
-    margin-bottom: 200px;
-    margin-left: 100px;
+    width: 100%;
+    /* margin-left: 100px; */
 }
 
-.Right {
+.Title a{
+    color: rgb(57, 59, 60);
+}
+
+.NavRight {
     flex: 1;
     display: flex;
-    justify-content: left;
+    justify-content: flex-start;
     margin-left: 0px;
+    gap: 20px;
     /* align-items: center; */
 }
 
-.Left {
+.NavLeft {
     flex: 1;
     display: flex;
     justify-content: center;
@@ -29,36 +33,8 @@
     font-size: 30px;
 }
 
-
-button {
-    font-family: Arial, Helvetica, sans-serif;
-    display: inline-block;
-    padding: 0.35em 1.2em;
-    border: 0.1em solid #FFFFFF;
-    margin: 0 0.3em 0.3em 0;
-    border-radius: 0.12em;
-    box-sizing: border-box;
-    text-decoration: none;
-    font-family: 'Roboto', sans-serif;
-    font-weight: 300;
-    color: grey;
-    text-align: center;
-    transition: all 0.2s;
-    border-radius: 10px;
-}
-
-button:hover{
-    color: #000000;
-    background-color: #FFFFFF;
-}
-
 a {
-    color: grey;
+    color: white;
     text-decoration: none;
 }
 
-a:hover {
-    color:#00A0C6; 
-    text-decoration:none; 
-    cursor:pointer;  
-}

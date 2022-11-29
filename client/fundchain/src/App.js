@@ -9,8 +9,7 @@ import ShowDetails from './Components/ShowDetails';
 function App() {
 
   return (
-    <>
-    
+    <> 
     <Router>
     <NavBar/>
       <Routes>

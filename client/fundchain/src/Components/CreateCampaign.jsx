@@ -1,6 +1,6 @@
 
 import react, { useState } from 'react';
-import { Card, TextField, Button, TextareaAutosize } from '@mui/material';
+import { Card, TextField, Button } from '@mui/material';
 import { red } from "@mui/material/colors"
 import InputAdornment from '@mui/material/InputAdornment';
 import { useContext } from "react"

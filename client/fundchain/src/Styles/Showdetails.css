@@ -1,0 +1,124 @@
+
+
+.Showdetails{
+    box-sizing: border-box;
+    /* background-color: red; */
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+.Left{
+    /* background-color: aqua; */
+    width: 100%;
+    height: 100%;
+    flex : 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.InnerLeft{
+    width: 100%;
+    padding-top: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.Right {
+    /* background-color: aqua; */
+    width: 100%;
+    height: 100%;
+    flex : 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.ProgressBar{
+    margin-top: 10px;
+}
+
+.ContributeNow{
+    padding: 5px;
+}
+
+.EnterAmount{
+    padding: 5px;
+}
+
+
+.Ethinput{
+    padding: 5px;
+}
+
+.ProjectTitle{
+width: 70%;
+}
+
+.Description{
+
+width: 70%;
+color: grey;
+
+}
+
+.EtherScanLink{
+    width: 70%;
+}
+
+
+.InnerCard{
+    width: 100%;
+    padding : 10px
+}
+
+.OuterCard{
+    width: 70%;
+}
+
+.InnerOuterCard{
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+}
+
+
+.Showdetailsspinner{
+    width: 100%;
+    height : 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.InnerRight{
+
+    width: 100%;
+    padding-top: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 30px;
+}
+
+.contriButton{
+    margin-top: 5px;
+    margin-left: 5px;
+}
+
+.LastNote{
+    margin-left: 5px;
+    margin-top: 15px;
+}

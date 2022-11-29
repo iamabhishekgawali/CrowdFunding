@@ -4,9 +4,8 @@ import React from "react"
 import { WalletContext } from "../Context/WalletContext"
 import { useContext, useEffect, useState } from "react"
 import { Link } from "react-router-dom"
+import { Card } from "@chakra-ui/react"
 import "../Styles/Style.css";
-import ShowDetails from "./ShowDetails";
-// import {WalletContext} from "../Context/WalletContext"
 
 export default function Cardgrid() {
   const { CampaignsSummary } = useContext(WalletContext)
@@ -15,7 +14,7 @@ export default function Cardgrid() {
     <section className="main-card--cointainer">
       {CampaignsSummary.map((currElem, index) => {
         return (
-          <>
+          <Card>
             <Link id={index} to={`${currElem[9]}`}>
               <div className="card-container">
                 <div className="card ">
@@ -32,7 +31,7 @@ export default function Cardgrid() {
               </div>
               
             </Link>
-          </>
+          </Card>
         )
       })}
     </section>

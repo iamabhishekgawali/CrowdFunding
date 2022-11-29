@@ -141,7 +141,7 @@ contract Campaign {
     {
         return (
             minimunContribution,
-            address(this).balance,
+            address(this).balance/1e18,
             numRequests,
             approversCount,
             Owner,
