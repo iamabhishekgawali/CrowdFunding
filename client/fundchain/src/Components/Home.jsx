@@ -26,17 +26,9 @@ export default function Home() {
     }, 5000);
   }, []);
 
-  return (
-    <>
-      {spinner ? (
-        <div className="Home">
-          <CircularBar />
-        </div>
-      ) : (
-        <div>
-          <Cardgrid />
-        </div>
-      )}
-    </>
-  );
+  if(spinner){
+    return (<div className="Home"> <CircularBar /> </div>)
+  }
+  else
+    return  (<Cardgrid/>)
 }

@@ -86,8 +86,6 @@ contract Campaign {
     }
 
     function contribute() public payable {
-        require(block.timestamp < DateCreated);
-        require(msg.value > minimunContribution * 1e18);
         contributers.push(msg.sender);
         approvers[msg.sender] = true;
         approversCount++;
@@ -141,7 +139,7 @@ contract Campaign {
     {
         return (
             minimunContribution,
-            address(this).balance/1e18,
+            address(this).balance,
             numRequests,
             approversCount,
             Owner,

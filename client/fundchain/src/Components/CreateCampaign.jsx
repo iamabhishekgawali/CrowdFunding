@@ -11,7 +11,7 @@ import "../Styles/CreateCampaign.css"
 export default function CreateCampaign() {
 
     const navigate = useNavigate();
-    const { connectedAccount, CreateNewCampaign } = useContext(WalletContext)
+    const { connectedAccount, CreateNewCampaign,ethpricenow } = useContext(WalletContext)
     const [error, setError] = useState("");
     const [minContriInUSD, setMinContriInUSD] = useState(0);
     const [subtitle, setSubtitle] = useState("");
@@ -31,7 +31,7 @@ export default function CreateCampaign() {
             description,
             weblink
         })
-        await CreateNewCampaign(connectedAccount, campaignname, minContriInUSD,imageurl,targetInUSD,description,weblink);
+        await CreateNewCampaign(connectedAccount, campaignname,minContriInUSD ,imageurl,targetInUSD,description,weblink);
         navigate("/")
     }
 
@@ -68,7 +68,7 @@ export default function CreateCampaign() {
                         </TextField>
 
                         <TextField InputProps={{
-                            endAdornment: <InputAdornment position="end">ETH</InputAdornment>,
+                            endAdornment: <InputAdornment position="end">$</InputAdornment>,
                         }} sx={sx} type={'number'} label="Minimum amout in Eth" onChange={(e) => {
                             setMinContriInUSD(e.target.value);
                         }}>
@@ -82,7 +82,7 @@ export default function CreateCampaign() {
                         </TextField>
 
                         <TextField sx={sx} type={'number'} label="Target to Achieve" InputProps={{
-                            endAdornment: <InputAdornment position="end">ETH</InputAdornment>,
+                            endAdornment: <InputAdornment position="end">$</InputAdornment>,
                         }} onChange={(e) => {
                             setTargetInUSD(e.target.value);
                         }}>

@@ -3,6 +3,8 @@ import { useEffect, useContext } from "react";
 import { WalletContext } from "../Context/WalletContext";
 import "../Styles/Showdetails.css";
 import InputAdornment from "@mui/material/InputAdornment";
+import web3 from "web3"
+
 
 import {
   Card,
@@ -22,8 +24,9 @@ const sx = {
 };
 
 export default function ShowDetails(currElem) {
+  const [enteredAmount,setenteredAmount] = useState(0);
   const [spinner, setSpinner] = useState(true);
-  const { GetInstance, currentCampaignData } = useContext(WalletContext);
+  const { GetInstance, currentCampaignData,Contribute,ethpricenow} = useContext(WalletContext);
   const url = window.location.href;
   console.log(url);
   const id = url.substring(url.lastIndexOf("/") + 1);
@@ -32,13 +35,20 @@ export default function ShowDetails(currElem) {
     GetInstance(id);
     setTimeout(() => {
       setSpinner(false);
-    }, 3000);
+    }, 5000);
   }, []);
 
+  let MinAmount = null
+  let CampaignBalance = null
+  let target = null
+
+  console.log(currentCampaignData)
+  if(!spinner){
+    MinAmount = web3.utils.fromWei(currentCampaignData[0].toString());
+    CampaignBalance = web3.utils.fromWei(currentCampaignData[1].toString());
+    target = web3.utils.fromWei(currentCampaignData[8].toString());
+  }
   // Use this
-  console.log(currentCampaignData);
-  console.log(typeof currentCampaignData);
-  console.log(currentCampaignData[0]);
 
   return spinner ? (
     <div className="Showdetailsspinner">
@@ -77,7 +87,7 @@ export default function ShowDetails(currElem) {
               <div>
                 <Typography variant="caption">Minimum Contribution</Typography>
               </div>
-              <div>{currentCampaignData[0].toString()}</div>
+              <div>{MinAmount} ({ethpricenow*MinAmount}$)</div>
             </Card>
           </div>
 
@@ -118,10 +128,10 @@ export default function ShowDetails(currElem) {
                 <Typography variant="caption">CampaignBalance</Typography>
               </div>
               <Typography variant="h6">
-                {currentCampaignData[2].toString()} ETH
+                {CampaignBalance} ({CampaignBalance*ethpricenow}$) ETH
               </Typography>
               <Typography variant="body">
-                Target of {currentCampaignData[8].toString()} ETH
+                Target of {target} ({target*ethpricenow}$) ETH
               </Typography>
               <div className="ProgressBar">
                 <LinearProgress variant="buffer" value={50} />
@@ -143,6 +153,9 @@ export default function ShowDetails(currElem) {
 
               <div>
                 <TextField
+                onChange={(e)=>{
+                  setenteredAmount(e.target.value)
+                }}
                   className="Ethinput"
                   type={"number"}
                   label="Target to Achieve"
@@ -155,7 +168,11 @@ export default function ShowDetails(currElem) {
               </div>
 
               <div className="contriButton">
-                <Button variant="contained">
+                <Button variant="contained"  onClick={
+                  (e)=>{
+                    Contribute(id,enteredAmount.toString())
+                  }
+                }>
                   <Typography variant="button">Contribute</Typography>
                 </Button>
               </div>

@@ -1,6 +1,6 @@
 .Home {
     width: 100%;
-    height : 600px;
+    height :  100%;
     margin : 10px;
     /* background-color: rgba(23,34,44,.051); */
     display: flex;
@@ -8,5 +8,14 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+}
+
+.ShowingCards{
+    width: 100%;
+    height: 100%;
+    background-color: brown;
+    display: flex;
+    flex-direction: column;
+    
 }
 

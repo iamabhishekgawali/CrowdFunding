@@ -13,7 +13,7 @@ export default function NavBar() {
 
   return (
 
-    <Card sx={{ boxShadow: 2, }} className="NavBar">
+    <Card sx={{ boxShadow: 2, display: "flex",padding: 1,flexdirection: "row",width: 1}}>
       <div className="NavLeft">
         <div className="Title" >
           <Link to="/">🤝FundChain</Link>
@@ -23,13 +23,13 @@ export default function NavBar() {
       <div className="NavRight">
 
         <div className="CreateCampaign">
-          <Button variant="contained">
+          <Button variant="contained" size="small">
             <Link to="/newCampaign">Create Campaign</Link>
           </Button>
         </div>
 
         <div className="HowitWorks" >
-          <Button variant="contained">
+          <Button variant="contained" size="small">
             <Link to="/howitworks"> How it Works</Link>
           </Button>
         </div>
@@ -38,11 +38,11 @@ export default function NavBar() {
 
           {connectedAccount ? (
             <div>
-              <Button variant="contained">{connectedAccount}</Button>
+              <Button  size="small" variant="contained">{connectedAccount}</Button>
             </div>
           ) : (
             <div>
-              <Button onClick={() => {
+              <Button size="small"  onClick={() => {
                 ConnectWallet();
               }}>
                 Connect to MetaMask
