@@ -27,6 +27,7 @@ export default function Cardgrid() {
             <Link to={`${value[9].toString()}`}>
             <Card
               sx={{
+                boxShadow : 4,
                 height: 400,
                 margin: 2,
                 padding : 2,

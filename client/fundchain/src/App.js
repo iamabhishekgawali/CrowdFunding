@@ -8,8 +8,8 @@ import ShowDetails from './Components/ShowDetails';
 import { WalletContext } from './Context/WalletContext';
 import {useContext,useEffect} from "react"
 import ConnectWallet from './Components/ConnectWallet';
-
-
+import AddWithdrawRequest from './Components/AddWithdrawRequest';
+import Createrequest from './Components/Createrequest';
 function App() {
 
   const {connectedAccount} = useContext(WalletContext)
@@ -24,6 +24,8 @@ function App() {
         <Route path='/' element={<Home/>}/>
         <Route path='/newCampaign' element={<CreateCampaign/>} />
         <Route path='/:id' element={<ShowDetails/>}/>
+        <Route path='/withdraw/:id' element={<AddWithdrawRequest/>}/>
+        <Route path='/withdraw/makerequest/:id' element={<Createrequest/>} />
       </Routes>)
     }
     </Router>

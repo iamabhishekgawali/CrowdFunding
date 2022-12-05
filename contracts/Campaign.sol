@@ -4,7 +4,7 @@ pragma solidity ^0.8.17;
 contract CampaignFactory {
     
     address[] public deployedCampaigns;
-    // 0 1 2 3
+
     function createCampaign(
         uint minimum,
         string memory name,
@@ -37,6 +37,7 @@ contract CampaignFactory {
 }
 
 contract Campaign {
+
     struct Request {
         string description;
         uint value;
@@ -92,7 +93,7 @@ contract Campaign {
     }
 
     uint public numRequests;
-    mapping(uint => Request) requests;
+    mapping(uint => Request) public requests;
 
     function createRequest(
         string memory _description,

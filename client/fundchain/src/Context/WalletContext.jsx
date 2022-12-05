@@ -83,6 +83,8 @@ export const WalletProvider = ({ children }) => {
   const [CampaignsSummary, setCampaignsSummary] = useState({});
   const [currentCampaignData, setCampaignDataData] = useState({});
   const [ethpricenow,setEthpricenow]  = useState(0);
+  const [withdrawrequestcount,setwithdrawrequestcount] = useState(0);
+  const [Allwithdrawrequest,setAllwithdrawrequest] = useState();
 
   async function GetAllCampaignsData() {
     const provider = new ethers.providers.Web3Provider(ethereum);
@@ -153,7 +155,6 @@ export const WalletProvider = ({ children }) => {
 
   useEffect(() => {
     CheckifWalletisConnected();
-
     axios.get("https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=BTC,USD,EUR").then((data)=>{
     console.log("Hello world")  
     console.log(data.data)
@@ -162,6 +163,35 @@ export const WalletProvider = ({ children }) => {
     setEthpricenow(parseFloat(USD))
     })
   }, []);
+
+
+  const FindCount = async (id)=>{
+    const TransactionHash = GetContract(id);
+    const CampaignData = await TransactionHash.numRequests.call();
+    console.log(CampaignData)
+    setwithdrawrequestcount(CampaignData.toString())
+  }
+
+  const Addtorequest = async (id,description,eth,walletaddress)=>{
+    const TransactionHash = GetContract(id);
+    console.log("Parsing th amount of ether recio");
+    const ParsedAmount = ethers.utils.parseEther(eth)
+    console.log(ParsedAmount);
+    const Hash = await TransactionHash.createRequest(description,ParsedAmount,connectedAccount);
+    const FinalHash = await Hash.wait()
+    console.log(FinalHash)
+  }
+
+  const GetRequest = async (id)=>{
+    let Allthelist  = []
+    const TransactionHash = GetContract(id);
+    for(let i=0;i<withdrawrequestcount;i++){
+      const hash = await TransactionHash.requests(i);
+      console.log(hash)
+      Allthelist.push(hash)
+    }
+    setAllwithdrawrequest(Allthelist)
+  }
 
   return (
     <WalletContext.Provider
@@ -178,7 +208,12 @@ export const WalletProvider = ({ children }) => {
         CampaignsData,
         setCampaignData,
         Contribute,
-        ethpricenow
+        ethpricenow,
+        FindCount,
+        Addtorequest,
+        withdrawrequestcount,
+        Allwithdrawrequest,
+        GetRequest
       }}
     >
       {children}

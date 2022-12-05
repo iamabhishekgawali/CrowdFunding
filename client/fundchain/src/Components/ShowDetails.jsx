@@ -4,13 +4,14 @@ import { WalletContext } from "../Context/WalletContext";
 import "../Styles/Showdetails.css";
 import InputAdornment from "@mui/material/InputAdornment";
 import web3 from "web3"
+import { Link } from "react-router-dom"
+
 
 
 import {
   Card,
   Typography,
   Box,
-  Link,
   LinearProgress,
   TextField,
   Button,
@@ -74,7 +75,7 @@ export default function ShowDetails(currElem) {
 
           <div className="EtherScanLink">
             <Link
-              href={`https://rinkeby.etherscan.io/address/${currentCampaignData[9]}`}
+              href={`https://goerli.etherscan.io/address/${currentCampaignData[9]}`}
             >
               <Typography variant="body2" gutterBottom>
                 View on Goerli Etherscan
@@ -168,6 +169,7 @@ export default function ShowDetails(currElem) {
               </div>
 
               <div className="contriButton">
+                
                 <Button variant="contained"  onClick={
                   (e)=>{
                     Contribute(id,enteredAmount.toString())
@@ -175,6 +177,7 @@ export default function ShowDetails(currElem) {
                 }>
                   <Typography variant="button">Contribute</Typography>
                 </Button>
+                
               </div>
             </Card>
           </div>
@@ -182,11 +185,13 @@ export default function ShowDetails(currElem) {
           <div className="OuterCard">
             <Card sx={sx} className="InnerOuterCard">
               <div className="contriButton">
+              <Link to={`/withdraw/${id}`}>
                 <Button variant="contained">
                   <Typography variant="button">
                     Add a Withdrawal Request
                   </Typography>
                 </Button>
+              </Link>
               </div>
               <div className="LastNote">
                 <Typography variant="body">

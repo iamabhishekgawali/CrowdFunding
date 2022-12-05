@@ -1,13 +1,13 @@
 
 import react, { useState } from 'react';
-import { Card, TextField, Button } from '@mui/material';
+import { Card, TextField, Button, Typography } from '@mui/material';
 import { red } from "@mui/material/colors"
 import InputAdornment from '@mui/material/InputAdornment';
 import { useContext } from "react"
 import { WalletContext } from "../Context/WalletContext"
 import { useNavigate } from 'react-router-dom';
 import "../Styles/CreateCampaign.css"
-
+import CampaignIcon from '@mui/icons-material/Campaign';
 export default function CreateCampaign() {
 
     const navigate = useNavigate();
@@ -20,6 +20,7 @@ export default function CreateCampaign() {
     const [description, setDescription] = useState("")
     const [imageurl, setImageurl] = useState("")
     const [weblink, setweblink] = useState("")
+    const [_minContriInUSD,set__minContriInUSD] = useState("");
 
     async function onchangeHandler() {
         console.log({
@@ -43,8 +44,10 @@ export default function CreateCampaign() {
     return (
 
         <div className="CreateCampaignOuter">
-            <h1>Create a New Campaign</h1>
-
+            <Typography variant='h4'>
+            Create a New Campaign
+            <CampaignIcon style={{ fontSize: 40,marginLeft : 20,marginTop : 10 }} />
+            </Typography>
             <Card sx={{ width: 1 }} >
                 <div className='CreateCampaignForm'>
 
@@ -68,8 +71,8 @@ export default function CreateCampaign() {
                         </TextField>
 
                         <TextField InputProps={{
-                            endAdornment: <InputAdornment position="end">$</InputAdornment>,
-                        }} sx={sx} type={'number'} label="Minimum amout in Eth" onChange={(e) => {
+                            endAdornment: <InputAdornment position="end">ETH</InputAdornment>,
+                        }} sx={sx} type={'number'} label={`Minimum amout in Eth ${Math.trunc(minContriInUSD *ethpricenow)} $`} onChange={(e) => {
                             setMinContriInUSD(e.target.value);
                         }}>
 
@@ -81,8 +84,8 @@ export default function CreateCampaign() {
 
                         </TextField>
 
-                        <TextField sx={sx} type={'number'} label="Target to Achieve" InputProps={{
-                            endAdornment: <InputAdornment position="end">$</InputAdornment>,
+                        <TextField sx={sx} type={'number'} label={`Target to Achieve ETH ${Math.trunc(targetInUSD*ethpricenow)}$`} InputProps={{
+                            endAdornment: <InputAdornment position="end">ETH</InputAdornment>,
                         }} onChange={(e) => {
                             setTargetInUSD(e.target.value);
                         }}>
