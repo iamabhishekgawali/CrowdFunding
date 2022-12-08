@@ -193,6 +193,12 @@ export const WalletProvider = ({ children }) => {
     setAllwithdrawrequest(Allthelist)
   }
 
+  const ApproveRequest = async (id,index)=>{
+    const TransactionHash = GetContract(id);
+    const Hash = await TransactionHash.approveRequest(index);
+    await Hash.wait()
+  }
+
   return (
     <WalletContext.Provider
       value={{
@@ -213,7 +219,8 @@ export const WalletProvider = ({ children }) => {
         Addtorequest,
         withdrawrequestcount,
         Allwithdrawrequest,
-        GetRequest
+        GetRequest,
+        ApproveRequest
       }}
     >
       {children}
