@@ -3,9 +3,9 @@ import { useEffect, useContext } from "react";
 import { WalletContext } from "../Context/WalletContext";
 import "../Styles/Showdetails.css";
 import InputAdornment from "@mui/material/InputAdornment";
-import web3 from "web3"
-import { Link } from "react-router-dom"
-import Confetti from "./Confetti";
+import web3 from "web3";
+import { Link } from "react-router-dom";
+import Confetti from "react-confetti";
 
 import {
   Card,
@@ -16,7 +16,9 @@ import {
   Button,
   Alert,
   Backdrop,
-  CircularProgress
+  CircularProgress,
+  Modal,
+  AlertTitle,
 } from "@mui/material";
 import "typeface-roboto-mono";
 import { useState } from "react";
@@ -27,7 +29,6 @@ const sx = {
 };
 
 export default function ShowDetails(currElem) {
-
   const [open, setOpen] = React.useState(false);
   const handleClose = () => {
     window.location.reload(false);
@@ -35,14 +36,19 @@ export default function ShowDetails(currElem) {
   const handleToggle = () => {
     setOpen(!open);
   };
-  const [enteredAmount,setenteredAmount] = useState(0);
+  const [enteredAmount, setenteredAmount] = useState(0);
   const [spinner, setSpinner] = useState(true);
-  const { transactionprocess,GetInstance, currentCampaignData,Contribute,ethpricenow} = useContext(WalletContext);
+  const {
+    transactionprocess,
+    GetInstance,
+    currentCampaignData,
+    Contribute,
+    ethpricenow,
+  } = useContext(WalletContext);
   const url = window.location.href;
   console.log(url);
   const id = url.substring(url.lastIndexOf("/") + 1);
   console.log(id);
-
 
   useEffect(() => {
     GetInstance(id);
@@ -51,23 +57,23 @@ export default function ShowDetails(currElem) {
     }, 5000);
   }, []);
 
-  let MinAmount = null
-  let CampaignBalance = null
-  let target = null
+  let MinAmount = null;
+  let CampaignBalance = null;
+  let target = null;
 
   let percent = 10;
 
-  if(spinner == false){
-    const a = web3.utils.fromWei(currentCampaignData[8].toString());  
+  if (spinner == false) {
+    const a = web3.utils.fromWei(currentCampaignData[8].toString());
     const b = web3.utils.fromWei(currentCampaignData[1].toString());
-    console.log(a)
-    console.log(b)
-    percent = (b/a)*100;
-    console.log(percent)
+    console.log(a);
+    console.log(b);
+    percent = (b / a) * 100;
+    console.log(percent);
   }
 
-  console.log(currentCampaignData)
-  if(!spinner){
+  console.log(currentCampaignData);
+  if (!spinner) {
     MinAmount = web3.utils.fromWei(currentCampaignData[0].toString());
     CampaignBalance = web3.utils.fromWei(currentCampaignData[1].toString());
     target = web3.utils.fromWei(currentCampaignData[8].toString());
@@ -76,16 +82,28 @@ export default function ShowDetails(currElem) {
 
   return spinner ? (
     <div className="Showdetailsspinner">
-    <CircularBar></CircularBar>
+      <CircularBar></CircularBar>
     </div>
   ) : (
     <div className="Showdetails">
+      { transactionprocess &&  <Confetti style={{
+        zIndex : "99999"
+      }} ></Confetti> }
       <Backdrop
-        sx={{zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
         open={open}
         onClick={handleClose}
       >
-         { !transactionprocess ? (<CircularProgress />) :   (<Alert variant="success"> Transaction sucessfully completed</Alert>) } 
+        {!transactionprocess ? (
+          <CircularProgress />
+        ) : (
+          <div style={{}}>
+           
+            <Alert severity="success" fontSize="80">
+              <AlertTitle> Transaction sucessfully completed</AlertTitle>
+            </Alert>
+          </div>
+        )}
       </Backdrop>
       <div className="Left">
         <div className="InnerLeft">
@@ -105,11 +123,14 @@ export default function ShowDetails(currElem) {
 
           <div className="EtherScanLink">
             <div style={{}}>
-            <a target="_blank" href={`https://goerli.etherscan.io/address/${currentCampaignData[9]}`}>
-              <Typography sx={{color:"grey"}}variant="body2">
-                View on Goerli Etherscan
-              </Typography>
-            </a>
+              <a
+                target="_blank"
+                href={`https://goerli.etherscan.io/address/${currentCampaignData[9]}`}
+              >
+                <Typography sx={{ color: "grey" }} variant="body2">
+                  View on Goerli Etherscan
+                </Typography>
+              </a>
             </div>
           </div>
 
@@ -118,7 +139,9 @@ export default function ShowDetails(currElem) {
               <div>
                 <Typography variant="caption">Minimum Contribution</Typography>
               </div>
-              <div>{MinAmount} ({ethpricenow*MinAmount}$)</div>
+              <div>
+                {MinAmount} ({ethpricenow * MinAmount}$)
+              </div>
             </Card>
           </div>
 
@@ -159,10 +182,10 @@ export default function ShowDetails(currElem) {
                 <Typography variant="caption">CampaignBalance</Typography>
               </div>
               <Typography variant="h6">
-                {CampaignBalance} ({CampaignBalance*ethpricenow}$) ETH
+                {CampaignBalance} ({CampaignBalance * ethpricenow}$) ETH
               </Typography>
               <Typography variant="body">
-                Target of {target} ({target*ethpricenow}$) ETH
+                Target of {target} ({target * ethpricenow}$) ETH
               </Typography>
               <div className="ProgressBar">
                 <LinearProgress variant="buffer" value={percent} />
@@ -184,9 +207,9 @@ export default function ShowDetails(currElem) {
 
               <div>
                 <TextField
-                onChange={(e)=>{
-                  setenteredAmount(e.target.value)
-                }}
+                  onChange={(e) => {
+                    setenteredAmount(e.target.value);
+                  }}
                   className="Ethinput"
                   type={"number"}
                   label="Target to Achieve"
@@ -199,16 +222,15 @@ export default function ShowDetails(currElem) {
               </div>
 
               <div className="contriButton">
-                
-                <Button variant="contained"  onClick={
-                  (e)=>{
-                    Contribute(id,enteredAmount.toString())
+                <Button
+                  variant="contained"
+                  onClick={(e) => {
+                    Contribute(id, enteredAmount.toString());
                     handleToggle();
-                  }
-                }>
+                  }}
+                >
                   <Typography variant="button">Contribute</Typography>
                 </Button>
-                
               </div>
             </Card>
           </div>
@@ -216,13 +238,13 @@ export default function ShowDetails(currElem) {
           <div className="OuterCard">
             <Card sx={sx} className="InnerOuterCard">
               <div className="contriButton">
-              <Link to={`/withdraw/${id}`}>
-                <Button variant="contained">
-                  <Typography variant="button">
-                    Add a Withdrawal Request
-                  </Typography>
-                </Button>
-              </Link>
+                <Link to={`/withdraw/${id}`}>
+                  <Button variant="contained">
+                    <Typography variant="button">
+                      Add a Withdrawal Request
+                    </Typography>
+                  </Button>
+                </Link>
               </div>
               <div className="LastNote">
                 <Typography variant="body">
