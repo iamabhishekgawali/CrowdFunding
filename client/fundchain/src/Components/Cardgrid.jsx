@@ -41,7 +41,7 @@ export default function Cardgrid() {
               <Typography variant="h5">{value[5]}</Typography>
               <Typography variant="body2"> by {value[4]}</Typography>
               <Typography variant="h6">{web3.utils.fromWei(value[8].toString())*ethpricenow} $</Typography>
-              <LinearProgress variant="buffer" value={50} />
+              <LinearProgress variant="buffer" value={(web3.utils.fromWei(value[1].toString())/web3.utils.fromWei(value[8].toString()))*100} />
             </Card>
             </Link>
           </Grid>

@@ -7,7 +7,7 @@ import web3 from "web3"
 function ShowWithdrawRequest({ id }) {
 
   const [spinner,setSpinner] = useState(true);
-  const {ApproveRequest,withdrawrequestcount,Allwithdrawrequest,GetRequest,currentCampaignData,GetInstance} = useContext(WalletContext);
+  const {ApproveRequest,withdrawrequestcount,Allwithdrawrequest,GetRequest,currentCampaignData,GetInstance,ethpricenow,FinalizeRequest} = useContext(WalletContext);
   console.log(id)
   console.log(withdrawrequestcount)
   console.log(Allwithdrawrequest)
@@ -41,11 +41,12 @@ function ShowWithdrawRequest({ id }) {
     </Typography>
     <div>
     <Typography variant="h4" >Balance</Typography>
-    <Typography variant="h5" >  {web3.utils.fromWei(currentCampaignData[1].toString())+ "ETH"}
+    <Typography variant="h5" >  {web3.utils.fromWei(currentCampaignData[1].toString())+ "ETH"} {web3.utils.fromWei(currentCampaignData[1].toString())*ethpricenow}$
       </Typography>
+      <Button variant="contained" size="small">Add withdrawal request</Button>
       </div>
   </div>
-  <TableContainer  component={Paper}>
+  <TableContainer  sx={{boxShadow : 3,backgroundColor : "white"}} component={Paper}>
   <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
@@ -70,11 +71,13 @@ function ShowWithdrawRequest({ id }) {
               <TableCell align="right">{row[0]}</TableCell>
               <TableCell align="right">{web3.utils.fromWei(row[1].toString())}</TableCell>
               <TableCell align="right">{row[2]}</TableCell>
-              <TableCell align="right">{row[4].toString()}/{withdrawrequestcount}</TableCell>
+              <TableCell align="right">{row[4].toString()}/{currentCampaignData[3].toString()}</TableCell>
               <TableCell align="right">  <Button variant="contained" size="small" onClick={()=>{
                 ApproveRequest(id,index);
               }}>Approve</Button> </TableCell>
-              <TableCell align="right"> <Button variant="contained" size="small" >Finalize</Button>   </TableCell>
+              <TableCell align="right"> <Button variant="contained" size="small" onClick={()=>{
+                FinalizeRequest(id,index);
+              }} >Finalize</Button>   </TableCell>
             </TableRow>
           ))}
         </TableBody>

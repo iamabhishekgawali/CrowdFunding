@@ -85,6 +85,7 @@ export const WalletProvider = ({ children }) => {
   const [ethpricenow,setEthpricenow]  = useState(0);
   const [withdrawrequestcount,setwithdrawrequestcount] = useState(0);
   const [Allwithdrawrequest,setAllwithdrawrequest] = useState();
+  const [transactionprocess,setTransactionprocess] = useState(false);
 
   async function GetAllCampaignsData() {
     const provider = new ethers.providers.Web3Provider(ethereum);
@@ -150,7 +151,9 @@ export const WalletProvider = ({ children }) => {
   const Contribute = async (id,amount)=>{
     const campaign = GetCampaign(id);
     console.log(amount)
-    await campaign.methods.contribute().send({from : connectedAccount,value : Web3.utils.toWei(amount, 'ether')});
+    const transactionHash = await campaign.methods.contribute().send({from : connectedAccount,value : Web3.utils.toWei(amount, 'ether')});
+    console.log("Setting true")
+    setTransactionprocess(true);
   }
 
   useEffect(() => {
@@ -193,6 +196,13 @@ export const WalletProvider = ({ children }) => {
     setAllwithdrawrequest(Allthelist)
   }
 
+  const FinalizeRequest = async (id,index)=>
+  {
+    const TransactionHash = GetContract(id);
+    const Hash = await TransactionHash.finalizeRequest(index);
+    await Hash.wait();
+  }
+
   const ApproveRequest = async (id,index)=>{
     const TransactionHash = GetContract(id);
     const Hash = await TransactionHash.approveRequest(index);
@@ -220,7 +230,10 @@ export const WalletProvider = ({ children }) => {
         withdrawrequestcount,
         Allwithdrawrequest,
         GetRequest,
-        ApproveRequest
+        ApproveRequest,
+        FinalizeRequest,
+        setTransactionprocess,
+        transactionprocess
       }}
     >
       {children}
