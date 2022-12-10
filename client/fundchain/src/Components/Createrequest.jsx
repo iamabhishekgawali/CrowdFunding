@@ -1,7 +1,9 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import "../Styles/addwithdraw.css";
-import { Button, Typography, Card, TextField } from "@mui/material";
+import { Button, Typography, Card, TextField,Backdrop,Alert,AlertTitle,CircularProgress } from "@mui/material";
 import { WalletContext } from "../Context/WalletContext";
+import { useNavigate } from "react-router-dom";
+
 const style = {
   width: "100%",
   height: "100%",
@@ -29,16 +31,41 @@ function Createrequest() {
   const id = url.substring(url.lastIndexOf("/") + 1);
   console.log(id);
 
-  const { Addtorequest } = useContext(WalletContext);
-
+  const { Addtorequest,transactionprocess,setTransactionprocess } = useContext(WalletContext);
+  const Navigate = useNavigate();
   const [description, setDescription] = useState();
   const [eth, setEth] = useState();
   const [walletaddress, setWalletaddress] = useState();
-
+  const [open, setOpen] = React.useState(false);
+  const handleClose = () => {
+    console.log("Called handle close")
+    setTransactionprocess(false);
+    Navigate(`/withdraw/${id}`);
+  };
+  const handleToggle = () => {
+    setOpen(!open);
+  };
   return (
     <div style={style}>
+      
+      <Backdrop
+        sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={open}
+        onClick={handleClose}
+      >
+        {!transactionprocess ? (
+          <CircularProgress />
+        ) : (
+          <div style={{}}>
+            <Alert severity="success" fontSize="80">
+              <AlertTitle>Request Added Sucessfully</AlertTitle>
+            </Alert>
+          </div>
+        )}
+      </Backdrop>
+
       <Typography sx={{ width: 0.5, fontWeight: "400" }} variant="h2">
-        Make a Withdrawal Request
+        Make a Withdrawal Request {transactionprocess ? "true" : "false"}
       </Typography>
       <Card sx={{ boxShadow: 4, borderRadius: 7 }} style={CardStyle}>
         <TextField
@@ -69,8 +96,10 @@ function Createrequest() {
         <Button
           required
           onClick={() => {
+            console.log(walletaddress)
             console.log({id,description,eth,walletaddress});
             Addtorequest(id, description, eth, walletaddress);
+            handleToggle();
           }}
           sx={{ width: 0.8 }}
           variant="contained"
@@ -78,6 +107,7 @@ function Createrequest() {
           {" "}
           Make Request{" "}
         </Button>
+      
       </Card>
     </div>
   );

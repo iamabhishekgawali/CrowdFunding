@@ -10,6 +10,8 @@ import {useContext,useEffect} from "react"
 import ConnectWallet from './Components/ConnectWallet';
 import AddWithdrawRequest from './Components/AddWithdrawRequest';
 import Createrequest from './Components/Createrequest';
+import Footer from './Components/Footer';
+
 function App() {
 
   const {connectedAccount} = useContext(WalletContext)
@@ -28,6 +30,7 @@ function App() {
         <Route path='/withdraw/makerequest/:id' element={<Createrequest/>} />
       </Routes>)
     }
+    <Footer></Footer>
     </Router>
   )
 }

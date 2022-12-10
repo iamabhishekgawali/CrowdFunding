@@ -31,6 +31,7 @@ const sx = {
 export default function ShowDetails(currElem) {
   const [open, setOpen] = React.useState(false);
   const handleClose = () => {
+    setTransactionprocess(false);
     window.location.reload(false);
   };
   const handleToggle = () => {
@@ -44,6 +45,7 @@ export default function ShowDetails(currElem) {
     currentCampaignData,
     Contribute,
     ethpricenow,
+    setTransactionprocess
   } = useContext(WalletContext);
   const url = window.location.href;
   console.log(url);
@@ -77,8 +79,19 @@ export default function ShowDetails(currElem) {
     MinAmount = web3.utils.fromWei(currentCampaignData[0].toString());
     CampaignBalance = web3.utils.fromWei(currentCampaignData[1].toString());
     target = web3.utils.fromWei(currentCampaignData[8].toString());
+    
   }
-  // Use this
+  
+  useEffect(()=>{
+    setTransactionprocess(false);
+  },[])
+
+  if(transactionprocess){
+    setTimeout(() => {
+      setTransactionprocess(false);
+      window.location.reload(false);
+    }, 4000);
+  }
 
   return spinner ? (
     <div className="Showdetailsspinner">
@@ -212,10 +225,10 @@ export default function ShowDetails(currElem) {
                   }}
                   className="Ethinput"
                   type={"number"}
-                  label="Target to Achieve"
+                  label="Enter the amount"
                   InputProps={{
                     endAdornment: (
-                      <InputAdornment position="end">ETH</InputAdornment>
+                      <InputAdornment position="end">{Math.trunc(enteredAmount*ethpricenow)}$</InputAdornment>
                     ),
                   }}
                 ></TextField>

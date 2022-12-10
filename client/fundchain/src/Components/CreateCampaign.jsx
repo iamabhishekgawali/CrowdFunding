@@ -1,6 +1,6 @@
 
 import react, { useState } from 'react';
-import { Card, TextField, Button, Typography } from '@mui/material';
+import { Card, TextField, Button, Typography,Alert,AlertTitle,Backdrop,CircularProgress } from '@mui/material';
 import { red } from "@mui/material/colors"
 import InputAdornment from '@mui/material/InputAdornment';
 import { useContext } from "react"
@@ -8,10 +8,19 @@ import { WalletContext } from "../Context/WalletContext"
 import { useNavigate } from 'react-router-dom';
 import "../Styles/CreateCampaign.css"
 import CampaignIcon from '@mui/icons-material/Campaign';
+import { useEffect } from 'react';
 export default function CreateCampaign() {
 
+    const [open, setOpen] = useState(false);
+    const handleClose = () => {
+      setTransactionprocess(false);
+      navigate("/")
+    };
+    const handleToggle = () => {
+      setOpen(!open);
+    };
     const navigate = useNavigate();
-    const { connectedAccount, CreateNewCampaign,ethpricenow } = useContext(WalletContext)
+    const { connectedAccount, CreateNewCampaign,ethpricenow,transactionprocess,setTransactionprocess } = useContext(WalletContext)
     const [error, setError] = useState("");
     const [minContriInUSD, setMinContriInUSD] = useState(0);
     const [subtitle, setSubtitle] = useState("");
@@ -33,9 +42,12 @@ export default function CreateCampaign() {
             weblink
         })
         await CreateNewCampaign(connectedAccount, campaignname,minContriInUSD ,imageurl,targetInUSD,description,weblink);
-        navigate("/")
+        
     }
 
+    useEffect(()=>{
+        setTransactionprocess(false);
+    },[])
 
     const sx = {
         margin: 2
@@ -44,6 +56,23 @@ export default function CreateCampaign() {
     return (
 
         <div className="CreateCampaignOuter">
+
+<Backdrop
+        sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={open}
+        onClick={handleClose}
+      >
+        {!transactionprocess ? (
+          <CircularProgress />
+        ) : (
+          <div style={{}}>
+           
+            <Alert severity="success" fontSize="80">
+              <AlertTitle> Transaction sucessfully completed</AlertTitle>
+            </Alert>
+          </div>
+        )}
+      </Backdrop>
             <Typography variant='h4'>
             Create a New Campaign
             <CampaignIcon style={{ fontSize: 40,marginLeft : 20,marginTop : 10 }} />
@@ -52,8 +81,8 @@ export default function CreateCampaign() {
                 <div className='CreateCampaignForm'>
 
                     <form onSubmit={(e) => {
-
                         onchangeHandler()
+                        handleToggle();
                         e.preventDefault();
 
                     }} className="CampaignForm">
@@ -72,8 +101,9 @@ export default function CreateCampaign() {
 
                         <TextField InputProps={{
                             endAdornment: <InputAdornment position="end">ETH</InputAdornment>,
-                        }} sx={sx} type={'number'} label={`Minimum amout in Eth ${Math.trunc(minContriInUSD *ethpricenow)} $`} onChange={(e) => {
+                        }} sx={sx} type={'text'} label={`Minimum amout in Eth ${Math.trunc(minContriInUSD *ethpricenow)} $`} onChange={(e) => {
                             setMinContriInUSD(e.target.value);
+                            
                         }}>
 
                         </TextField>
@@ -104,7 +134,7 @@ export default function CreateCampaign() {
 
                         </TextField>
 
-                        {connectedAccount ? (<Button sx={sx} variant="outlined" type={'submit'}> Submit </Button>) : (<Button sx={sx} variant="outlined" type={'submit'} disabled> Please connect Your wallet First </Button>)}
+                        {connectedAccount ? (<Button sx={sx}  variant="outlined" type={'submit'}> Submit </Button>) : (<Button sx={sx} variant="outlined" type={'submit'} disabled> Please connect Your wallet First </Button>)}
                     </form>
                 </div>
             </Card>

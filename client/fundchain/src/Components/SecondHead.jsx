@@ -13,7 +13,6 @@ export default function SecondHead() {
         <Typography variant="h4">
             CrowdFunding using powers of Crypto and Blockchain 
         </Typography>
-        <DeleteIcon></DeleteIcon>
         <Button sx={{width:300}} variant="contained" size="medium" onClick={()=>{
             Navigate("/newCampaign")
         }} >Click here to create Campaign</Button>

@@ -31,36 +31,7 @@ const GetContract = (add) => {
 
 
 
-const CreateNewCampaign = async (
-  WalletAddress,
-  title,
-  MinAmount,
-  Imageurl,
-  TargetAmount,
-  Description,
-  ProjectLink
-) => {
-  if (!ethereum) alert("Please Install MetaMask");
-  const Transaction = getWallet();
-  const Parsed_MinAmount = ethers.utils.parseEther(MinAmount);
-  const Parsed_TargetAmount = ethers.utils.parseEther(TargetAmount);
-  var ts = Math.round(new Date().getTime() / 1000);
 
-  const TransactionHash = await Transaction.createCampaign(
-    Parsed_MinAmount,
-    title,
-    Description,
-    Imageurl,
-    Parsed_TargetAmount,
-    ts,
-    ProjectLink,
-    WalletAddress
-  );
-
-  console.log(TransactionHash.hash);
-  TransactionHash.wait();
-  console.log(`Success - ${TransactionHash.hash}`);
-};
 
 const GetDeployedTransaction = async () => {
   try {
@@ -86,6 +57,37 @@ export const WalletProvider = ({ children }) => {
   const [withdrawrequestcount,setwithdrawrequestcount] = useState(0);
   const [Allwithdrawrequest,setAllwithdrawrequest] = useState();
   const [transactionprocess,setTransactionprocess] = useState(false);
+
+  const CreateNewCampaign = async (
+    WalletAddress,
+    title,
+    MinAmount,
+    Imageurl,
+    TargetAmount,
+    Description,
+    ProjectLink
+  ) => {
+    if (!ethereum) alert("Please Install MetaMask");
+    const Transaction = getWallet();
+    const Parsed_MinAmount = ethers.utils.parseEther(MinAmount);
+    const Parsed_TargetAmount = ethers.utils.parseEther(TargetAmount);
+    var ts = Math.round(new Date().getTime() / 1000);
+  
+    const TransactionHash = await Transaction.createCampaign(
+      Parsed_MinAmount,
+      title,
+      Description,
+      Imageurl,
+      Parsed_TargetAmount,
+      ts,
+      ProjectLink,
+      WalletAddress
+    );
+    
+    await TransactionHash.wait();
+    setTransactionprocess(true);
+    
+  };
 
   async function GetAllCampaignsData() {
     const provider = new ethers.providers.Web3Provider(ethereum);
@@ -180,9 +182,12 @@ export const WalletProvider = ({ children }) => {
     console.log("Parsing th amount of ether recio");
     const ParsedAmount = ethers.utils.parseEther(eth)
     console.log(ParsedAmount);
-    const Hash = await TransactionHash.createRequest(description,ParsedAmount,connectedAccount);
+    console.log("Making request")
+    console.log(walletaddress)
+    const Hash = await TransactionHash.createRequest(description,ParsedAmount,walletaddress);
     const FinalHash = await Hash.wait()
     console.log(FinalHash)
+    setTransactionprocess(true);
   }
 
   const GetRequest = async (id)=>{

@@ -3,9 +3,11 @@ import { WalletContext } from "../Context/WalletContext";
 import CircularBar from "./CircularBar";
 import { Table,TableContainer,Paper,TableHead ,TableRow,TableCell,TableBody, Button, Typography} from "@mui/material";
 import web3 from "web3"
+import { useNavigate } from "react-router-dom";
 
 function ShowWithdrawRequest({ id }) {
 
+  const Navigate = useNavigate();
   const [spinner,setSpinner] = useState(true);
   const {ApproveRequest,withdrawrequestcount,Allwithdrawrequest,GetRequest,currentCampaignData,GetInstance,ethpricenow,FinalizeRequest} = useContext(WalletContext);
   console.log(id)
@@ -43,7 +45,9 @@ function ShowWithdrawRequest({ id }) {
     <Typography variant="h4" >Balance</Typography>
     <Typography variant="h5" >  {web3.utils.fromWei(currentCampaignData[1].toString())+ "ETH"} {web3.utils.fromWei(currentCampaignData[1].toString())*ethpricenow}$
       </Typography>
-      <Button variant="contained" size="small">Add withdrawal request</Button>
+      <Button onClick={()=>{
+        Navigate(`/withdraw/makerequest/${id}`); 
+      }} variant="contained" size="small">Add withdrawal request</Button>
       </div>
   </div>
   <TableContainer  sx={{boxShadow : 3,backgroundColor : "white"}} component={Paper}>
