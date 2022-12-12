@@ -1,6 +1,6 @@
 
 ## Introduction
-### Fundchain is Decentralized Web app created using ethereum and smart contracts for crowdfunding where people can create a new campaigns and contributers can contribute to created campaign.
+#### Fundchain is Decentralized Web app created using ethereum and smart contracts for crowdfunding where people can create a new campaigns and contributers can contribute to created campaign.
 
 ## Usage
 
