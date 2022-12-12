@@ -1,13 +1,25 @@
-# Sample Hardhat Project
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, and a script that deploys that contract.
+# Fundchain is Decentralized Web app created using ethereum and smart contracts for crowdfunding where people can create a new campaigns and contributers can contribute to created campaign.
 
-Try running some of the following tasks:
+## Usage
 
-```shell
-npx hardhat help
-npx hardhat test
-REPORT_GAS=true npx hardhat test
-npx hardhat node
-npx hardhat run scripts/deploy.js
-```
+### Home 
+
+![](images/connect_metamask.png)
+
+![](images/Home.png)
+
+
+### Campaign Details
+
+![](images/Campaigndetails.png)
+
+### Confetti after contributing
+
+![](images/Confetti.png)
+
+### Withdrawal request
+
+![](images/WithdrawalRequest.jpeg)
+
+

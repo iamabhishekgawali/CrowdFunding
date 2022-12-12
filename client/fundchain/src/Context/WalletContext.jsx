@@ -48,6 +48,7 @@ const GetDeployedTransaction = async () => {
 };
 
 export const WalletProvider = ({ children }) => {
+  
   const [connectedAccount, setconnectedAccount] = useState("");
   const [isloading, setIsLoading] = useState(false);
   const [CampaignsData, setCampaignData] = useState([]);
