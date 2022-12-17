@@ -65,7 +65,7 @@ function Createrequest() {
       </Backdrop>
 
       <Typography sx={{ width: 0.5, fontWeight: "400" }} variant="h2">
-        Make a Withdrawal Request {transactionprocess ? "true" : "false"}
+        Make a Withdrawal Request
       </Typography>
       <Card sx={{ boxShadow: 4, borderRadius: 7 }} style={CardStyle}>
         <TextField

@@ -2,7 +2,6 @@
 pragma solidity ^0.8.17;
 
 contract CampaignFactory {
-    
     address[] public deployedCampaigns;
 
     function createCampaign(
@@ -13,7 +12,8 @@ contract CampaignFactory {
         uint target,
         uint _datecreated,
         string memory _Link,
-        address Sender
+        address Sender,
+        uint deadline
     ) public {
         address newCampaign = address(
             new Campaign(
@@ -24,7 +24,8 @@ contract CampaignFactory {
                 image,
                 target,
                 _datecreated,
-                _Link
+                _Link,
+                deadline
             )
         );
         deployedCampaigns.push(newCampaign);
@@ -33,12 +34,11 @@ contract CampaignFactory {
     function getDeployedCampaigns() public view returns (address[] memory) {
         return deployedCampaigns;
     }
-
 }
 
 contract Campaign {
-
     struct Request {
+        uint index;
         string description;
         uint value;
         address recipient;
@@ -55,16 +55,14 @@ contract Campaign {
     string public imageUrl;
     uint public targetToAchieve;
     address[] public contributers;
+    uint[] public amoundContributed;
     uint public DateCreated;
     string public WebLink;
-
+    bool public Complete_status;
+    uint public Deadline;
     mapping(address => bool) public approvers;
     uint public approversCount;
-
-    modifier restricted() {
-        require(msg.sender == Owner);
-        _;
-    }
+    mapping(address => bool) public refunded;
 
     constructor(
         uint minimun,
@@ -74,7 +72,8 @@ contract Campaign {
         string memory image,
         uint target,
         uint _datecreated,
-        string memory _Link
+        string memory _Link,
+        uint _Deadline
     ) {
         Owner = creator;
         minimunContribution = minimun;
@@ -84,12 +83,24 @@ contract Campaign {
         targetToAchieve = target;
         DateCreated = _datecreated;
         WebLink = _Link;
+        Deadline = _Deadline;
+        Complete_status = false;
     }
 
     function contribute() public payable {
+        
         contributers.push(msg.sender);
         approvers[msg.sender] = true;
         approversCount++;
+        amoundContributed.push(msg.value);
+        refunded[msg.sender] = false;
+        if (address(this).balance >= targetToAchieve) {
+            Complete_status = true;
+        }
+    }
+
+    function getDeadline() public view returns (uint) {
+        return Deadline;
     }
 
     uint public numRequests;
@@ -101,6 +112,7 @@ contract Campaign {
         address _recipient
     ) public {
         Request storage r = requests[numRequests++];
+        r.index = numRequests - 1;
         r.description = _description;
         r.value = _value;
         r.recipient = _recipient;
@@ -108,11 +120,31 @@ contract Campaign {
         r.approvalCount = 0;
     }
 
+    function Refunds(uint index) public payable {
+        refunded[contributers[index]] = true;
+        payable(contributers[index]).transfer(amoundContributed[index]);
+    }
+
+    function getContibuter() public view returns (address[] memory) {
+        return contributers;
+    }
+
+    function getAmountContributed() public view returns (uint[] memory) {
+        return amoundContributed;
+    }
+
     function approveRequest(uint index) public {
         require(approvers[msg.sender]);
         require(!requests[index].approvals[msg.sender]);
         requests[index].approvals[msg.sender] = true;
         requests[index].approvalCount++;
+    }
+
+    function checkifApproved(
+        uint index,
+        address reciepient
+    ) public view returns (bool) {
+        return requests[index].approvals[reciepient];
     }
 
     function finalizeRequest(uint index) public payable {
@@ -135,7 +167,9 @@ contract Campaign {
             string memory,
             string memory,
             uint,
-            address
+            address,
+            uint,
+            bool
         )
     {
         return (
@@ -148,7 +182,9 @@ contract Campaign {
             CampaignDescription,
             imageUrl,
             targetToAchieve,
-            address(this)
+            address(this),
+            Deadline,
+            Complete_status
         );
     }
 }

@@ -1,4 +1,4 @@
 {
-    "editor.fontFamily": "menlo nerd font mono, 'Courier New', monospace",
+    "editor.fontFamily": "consolas, 'Courier New', monospace",
     "terminal.integrated.fontFamily": "menlo nerd font mono"
 }

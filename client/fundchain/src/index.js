@@ -5,11 +5,18 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { WalletProvider } from './Context/WalletContext';
 
+
+
+
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
 root.render(
+   
     <WalletProvider>
     <App />
     </WalletProvider>
+   
 
 );
 

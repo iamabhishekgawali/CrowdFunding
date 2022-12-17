@@ -1,7 +1,6 @@
 
 import react, { useState } from 'react';
 import { Card, TextField, Button, Typography,Alert,AlertTitle,Backdrop,CircularProgress } from '@mui/material';
-import { red } from "@mui/material/colors"
 import InputAdornment from '@mui/material/InputAdornment';
 import { useContext } from "react"
 import { WalletContext } from "../Context/WalletContext"
@@ -9,6 +8,9 @@ import { useNavigate } from 'react-router-dom';
 import "../Styles/CreateCampaign.css"
 import CampaignIcon from '@mui/icons-material/Campaign';
 import { useEffect } from 'react';
+import "typeface-roboto"
+
+
 export default function CreateCampaign() {
 
     const [open, setOpen] = useState(false);
@@ -100,8 +102,8 @@ export default function CreateCampaign() {
                         </TextField>
 
                         <TextField InputProps={{
-                            endAdornment: <InputAdornment position="end">ETH</InputAdornment>,
-                        }} sx={sx} type={'text'} label={`Minimum amout in Eth ${Math.trunc(minContriInUSD *ethpricenow)} $`} onChange={(e) => {
+                            endAdornment: <InputAdornment position="end">  <Typography variant='h6'> $ {Math.trunc(minContriInUSD *ethpricenow)}</Typography>      </InputAdornment>,
+                        }} sx={sx} type={'text'} label={`Minimum amout in ETH`} onChange={(e) => {
                             setMinContriInUSD(e.target.value);
                             
                         }}>
@@ -114,8 +116,8 @@ export default function CreateCampaign() {
 
                         </TextField>
 
-                        <TextField sx={sx} type={'number'} label={`Target to Achieve ETH ${Math.trunc(targetInUSD*ethpricenow)}$`} InputProps={{
-                            endAdornment: <InputAdornment position="end">ETH</InputAdornment>,
+                        <TextField sx={sx} type={'text'} label={`Target to Achieve ETH`} InputProps={{
+                            endAdornment: <InputAdornment position="end"> <Typography variant='h6'> $ {Math.trunc(targetInUSD *ethpricenow)} </Typography></InputAdornment>,
                         }} onChange={(e) => {
                             setTargetInUSD(e.target.value);
                         }}>
@@ -127,13 +129,11 @@ export default function CreateCampaign() {
                         }} >
 
                         </TextField>
-
-                        <TextField sx={sx} type={'text'} label="Enter project Link" onChange={(e) => {
+                        <Typography sx={{marginLeft : "20px"}} variant='body2'> Enter the Deadline</Typography>
+                        <TextField sx={sx}  type='date'  onChange={(e) => {
                             setweblink(e.target.value);
                         }} >
-
                         </TextField>
-
                         {connectedAccount ? (<Button sx={sx}  variant="outlined" type={'submit'}> Submit </Button>) : (<Button sx={sx} variant="outlined" type={'submit'} disabled> Please connect Your wallet First </Button>)}
                     </form>
                 </div>

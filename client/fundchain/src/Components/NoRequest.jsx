@@ -3,10 +3,10 @@ import FavoriteOutlinedIcon from '@mui/icons-material/FavoriteOutlined';
 import { Button, Typography ,Card} from '@mui/material';
 import { Link } from 'react-router-dom';
 
+
 const style = {
     width : "80%",
     height : "60%",
-    backgroundColor : "white",
     display : "flex",
     flexDirection : "column",
     alignItems : "center",

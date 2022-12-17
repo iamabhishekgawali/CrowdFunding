@@ -11,12 +11,26 @@ import ConnectWallet from './Components/ConnectWallet';
 import AddWithdrawRequest from './Components/AddWithdrawRequest';
 import Createrequest from './Components/Createrequest';
 import Footer from './Components/Footer';
+import { createTheme,ThemeProvider } from '@mui/material';
+import {CssBaseline} from '@mui/material';
+
+
+
 
 function App() {
 
-  const {connectedAccount} = useContext(WalletContext)
-  console.log("Hello world")
+  const {connectedAccount,mode} = useContext(WalletContext)
+
+  const Theme = createTheme({
+    palette : {
+      mode : mode
+    }
+  })
+  
+
   return (
+    <ThemeProvider theme={Theme}>
+    <CssBaseline /> 
     <Router>
     <NavBar/>
    
@@ -32,6 +46,7 @@ function App() {
     }
     <Footer></Footer>
     </Router>
+    </ThemeProvider>
   )
 }
 
