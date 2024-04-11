@@ -6,7 +6,7 @@ import {useContext,useEffect,useState} from "react"
 import "../Styles/Style.css";
 // import {WalletContext} from "../Context/WalletContext"
 // This is a comment 
-
+// This was not supposed to be changed
 export default function Cardgrid (){
     const {CampaignsSummary} = useContext(WalletContext)
     const [campaignData, setCampaignData] = useState(CampaignsSummary);
